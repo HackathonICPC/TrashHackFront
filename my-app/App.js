@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthScreen from './components/AuthScreen';
-import MenuScreen from './components/HomeScreen';
+import StartScreen from './components/StartScreen';
+import MenuScreen from './components/HomeScreen/MenuScreen';
 import LoadingScreen from './components/LoadingScreen';
+import LoginScreen from './components/LoginScreen';
+import RegisterScreen from './components/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,13 +32,19 @@ const App = () => {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {isAuthenticated === null ? (
           <Stack.Screen name="Loading" component={LoadingScreen} />
         ) : isAuthenticated ? (
-          <Stack.Screen name="Home" component={MenuScreen} />
+          <Stack.Screen name="HomeMenu" component={MenuScreen} />
         ) : (
-          <Stack.Screen name="Auth" component={AuthScreen} />
+          <>
+            <Stack.Screen name="Start" component={StartScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            {/* Потом убрать */}
+            <Stack.Screen name="HomeMenu" component={MenuScreen} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
