@@ -1,21 +1,59 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const RegistrationScreen = ({ navigation }) => {
+import axios from 'axios';
+
+const URL_API = "http://10.124.249.25:8080/api/";
+
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    // Ваша логика регистрации здесь, например, отправка данных на сервер или сохранение в локальном хранилище
+  const handleLogin = () => {
+    const requestData = {
+        username: username,
+        password: password
+      };
+      // console.log(username);
+      // console.log(password);
+      axios.post(URL_API+"auth/login", requestData)
+        .then(response => {
+            // console.log('!' + username);
+            // console.log(password);
+            const data = response.data; // Данные, которые пришли с сервера
+            // console.log(response);
+            // console.log(data);
+            // console.log(response.status);
+            
+            if (response.status === 200) {
+                console.log('Login successful. Token:', response.status);
+                // Сохраните токен в AsyncStorage или контексте приложения
+                // Перенаправьте пользователя на следующий экран или выполните необходимые действия
+                } else {
+                console.error('Login failed. Invalid response from server:', data);
+                // Добавьте код для обработки неверного ответа сервера
+                }
+            })
+        .catch(error => {
+            console.error('Login error:', error);
+            // Добавьте код для обработки ошибки входа
+        });
+
+    // Ваша логика входа здесь, например, проверка данных на сервере или в локальном хранилище
     console.log('Username:', username);
     console.log('Password:', password);
-    // Перенаправление на другой экран или действие
-    navigation.navigate('Home'); // Предполагается, что у вас есть экран с названием 'Home'
+
+    //потом убери
+    navigation.navigate('Home'); 
+  };
+
+  const handleRegistration = () => {
+    navigation.navigate('Auth'); 
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registration</Text>
+      <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter username"
@@ -29,7 +67,8 @@ const RegistrationScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Register" onPress={handleRegister} />
+      <Button title="Login" onPress={handleLogin} />
+      <Text style={styles.link} onPress={handleRegistration}>У меня нет аккаунта, переведи меня на регистрацию</Text>
     </View>
   );
 };
@@ -54,6 +93,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
   },
+  link: {
+    marginTop: 10,
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
 });
 
-export default RegistrationScreen;
+export default LoginScreen;
