@@ -8,9 +8,16 @@ import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import RegisterScreen from './components/RegisterScreen';
 
+//import {YaMap} from 'react-native-yamap';
+//YaMap.init('A916b0343-b8f7-4baa-ac7a-077d4a5386dd');
+
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
+  
+ 
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
