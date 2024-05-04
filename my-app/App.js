@@ -16,40 +16,11 @@ YaMap.init(API_TOKEN);
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const check = async () => {
-      try {
-        const token = await getToken();
-        if (token) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error('Error checking token:', error);
-        setIsLoggedIn(false);
-      }
-    };
-
-    check();
-  }, []);
-
   
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {
-        isLoggedIn ? (
-          <>
-            <Stack.Screen name="HomeMenu" component={MenuScreen} />
-            <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-          </>
-        ) : (
-          <>
+       
             <Stack.Screen name="Start" component={StartScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
@@ -57,8 +28,6 @@ const App = () => {
             <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
             {/* Потом убрать */}
             <Stack.Screen name="HomeMenu" component={MenuScreen} />
-          </>
-        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
