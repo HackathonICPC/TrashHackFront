@@ -26,8 +26,9 @@ const MyCard = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 252,
+    width: "100%",
     height: 265,
+    // flex: 1,
     backgroundColor: 'white',
     borderRadius: 30,
     shadowColor: '#bebebe',
