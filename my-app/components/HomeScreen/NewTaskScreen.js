@@ -2,25 +2,80 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const NewTaskScreen = ({ navigation, route }) => {
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [experience, setExperience] = useState('');
+  const [ox, setOX] = useState('');
+  const [oy, setOY] = useState('');
 
   const handleCreateTask = () => {
-    const newTask = { id: Math.random().toString(), description, status: 'In progress' };
+    const newTask = { 
+      id: Math.random().toString(), 
+      image, 
+      name, 
+      description, 
+      experience,
+      ox, 
+      oy, 
+      status: 'In progress' 
+    };
     console.log('New task:', newTask);
     route.params?.onTaskAdd(newTask);
     console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
     navigation.goBack();
-};
+  };
+
+  const handleAddImage = () => {
+    // Реализация загрузки изображения
+  };
+
+  const handleSelectPlace = () => {
+    // Реализация выбора места
+  };
 
   return (
     <View style={styles.container}>
-      <Text>New Task Screen</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter task description"
-        value={description}
-        onChangeText={setDescription}
-      />
+      <Text style={styles.title}>New Task Screen</Text>
+      <View style={styles.imageContainer}>
+        {/* Поле для загрузки изображения */}
+      </View>
+      <View style={styles.card}>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          value={description}
+          onChangeText={setDescription}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Experience"
+          value={experience}
+          onChangeText={setExperience}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="OX"
+          value={ox}
+          onChangeText={setOX}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="OY"
+          value={oy}
+          onChangeText={setOY}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Add Image" onPress={handleAddImage} />
+        <Button title="Select Place" onPress={handleSelectPlace} />
+      </View>
       <Button title="Create Task" onPress={handleCreateTask} />
     </View>
   );
@@ -32,14 +87,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+  imageContainer: {
+    width: '90%',
+    height: 200,
+    backgroundColor: '#ddd',
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  card: {
+    width: '100%',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
   },
   input: {
-    width: '100%',
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 20,
   },
 });
 
