@@ -4,7 +4,6 @@ import { URL_API } from './urls';
 import axios from 'axios';
 import { setToken, getToken } from '../utils/storage';
 
-import axios from 'axios';
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -17,9 +16,7 @@ const RegisterScreen = ({ navigation }) => {
         "password": password
       };
 
-      // debug START
       console.log();
-      // degug END
 
       axios.post(URL_API + "/auth/register", requestData)
         .then(response => {
@@ -44,7 +41,7 @@ const RegisterScreen = ({ navigation }) => {
         });
   };
 
-  const handleRegistration = () => {
+  const handleLogin = () => {
     navigation.navigate('Login'); 
   };
 
@@ -67,7 +64,7 @@ const RegisterScreen = ({ navigation }) => {
         />
         <View style={styles.buttonContainer}>
           <Button title="Back to Login" onPress={handleLogin} />
-          <Button title="   Register   " onPress={handleRegistration} /><Button title="HOME" onPress={() => navigation.navigate("HomeMenu")} />  
+          <Button title="   Register   " onPress={handleRegister} />
         </View> 
         
               
@@ -77,6 +74,7 @@ const RegisterScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 
 const windowWidth = Dimensions.get('window').width;
 

@@ -16,9 +16,6 @@ const LoginScreen = ({ navigation }) => {
         "password": password
       };
 
-      // debug START
-      console.log();
-      // degug END
 
       axios.post(URL_API + "/auth/login", requestData)
         .then(response => {
@@ -66,7 +63,7 @@ const LoginScreen = ({ navigation }) => {
         />
         <View style={styles.buttonContainer}>
           <Button title="    Login     " onPress={handleLogin} />
-          <Button title="  Register   " onPress={handleRegistration} />
+          <Button title="  Go to Register   " onPress={handleRegistration} />
         </View>
       
       <View style={styles.overlay} />
