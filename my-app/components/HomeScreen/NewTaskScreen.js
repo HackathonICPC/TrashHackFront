@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { URL_API } from '../urls';
+import axios from 'axios';
 
-const NewTaskScreen = ({ navigation, route }) => {
+const NewTaskScreen = ({ navigation }) => {
   const [description, setDescription] = useState('');
 
   const handleCreateTask = () => {
-    const newTask = { id: Math.random().toString(), description, status: 'In progress' };
+    const newTask = { id: "54", title: 'cuMCock' };
+
+    // debug
     console.log('New task:', newTask);
-    route.params?.onTaskAdd(newTask);
-    console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
-    navigation.goBack();
-};
+    // debug
+
+    axios.post(URL_API + '/task/new', newTask)
+      .then(response => {
+        console.log('Task added successfully:', response.data);
+        navigation.goBack(); // Переход назад после успешного добавления
+      })
+      .catch(error => {
+        console.error('Error adding task:', error);
+        // Добавьте обработку ошибки при добавлении задачи
+      });
+  };
 
   return (
     <View style={styles.container}>
