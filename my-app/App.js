@@ -8,6 +8,7 @@ import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import TaskDetailsScreen from './components/HomeScreen/TaskDetailsScreen';
 import RegisterScreen from './components/RegisterScreen';
+import MyCard from './components/HomeScreen/MyCard';
 import {YaMap} from 'react-native-yamap';
 
 
