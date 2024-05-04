@@ -27,12 +27,13 @@ const StartScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={[styles.glow, { opacity }]} />
-      <Image source={require('../resourses/rayan.png')} style={styles.logo} />
+      {/* <Animated.View style={[styles.glow, { opacity }]} /> */}
+      <Image source={require('../resourses/turtle.gif')} style={styles.logo} />
       <Text style={styles.title}>Welcome to Sigma Trash App!!!!!</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Start</Text>
       </TouchableOpacity>
+      {/* <Image source={require('../resourses/turtle.gif')} style={styles.turtle} /> */}
     </View>
   );
 };
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#0a0a0a',
   },
-  logo: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
-  },
+  // logo: {
+  //   width: 200,
+  //   height: 200,
+  //   marginBottom: 20,
+  // },
   glow: {
     position: 'absolute',
     backgroundColor: '#666DD7',
@@ -71,6 +72,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  logo: {
+    width: "55%",
+    height: "15%",
+    marginTop: 20,
   },
 });
 
