@@ -7,6 +7,7 @@ import MenuScreen from './components/HomeScreen/MenuScreen';
 import LoginScreen from './components/LoginScreen';
 import TaskDetailsScreen from './components/HomeScreen/TaskDetailsScreen';
 import RegisterScreen from './components/RegisterScreen';
+import MyCard from './components/HomeScreen/MyCard';
 import {YaMap} from 'react-native-yamap';
 import { checkToken, getToken } from './utils/storage';
 

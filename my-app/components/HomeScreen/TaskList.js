@@ -1,33 +1,55 @@
-import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import MyCard from './MyCard';
 
-const TaskList = ({ tasks, onTaskPress }) => {
-  const renderTaskItem = ({ item }) => (
-    <TouchableOpacity onPress={() => onTaskPress(item)}>
-      <View style={styles.taskContainer}>
-        {/* Уберите код, связанный с изображением, если его нет в ваших данных */}
-        <Text>{item.description}</Text>
-        <Text>Status: {item.status}</Text>
+const TaskList = () => {
+  const [data, setData] = useState(Array.from({ length: 20 }, (_, index) => ({ id: index, text: `Item ${index + 1}` })));
+
+  const fetchMoreData = () => {
+    // Simulate fetching more data (e.g., from an API)
+    const newData = Array.from({ length: 20 }, (_, index) => ({ id: data.length + index, text: `Item ${data.length + index + 1}` }));
+    setData([...data, ...newData]);
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.cardContainer}>
+        <MyCard title={item.text} description="Description" />
       </View>
-    </TouchableOpacity>
-  );
+    );
+  };
 
   return (
-    <FlatList
-      data={tasks}
-      renderItem={renderTaskItem}
-      keyExtractor={(item) => item.id.toString()}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={fetchMoreData} // Callback при достижении конца списка
+        onEndReachedThreshold={0.1} // Процент точки, когда вызывается onEndReached (например, 0.1 - 10% от конца)
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  taskContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  container: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: '#fff',
+    paddingTop: 20,
+    marginHorizontal: 10,
+  },
+  card: {
+    backgroundColor: '#f0f0f0',
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 20,
+    borderRadius: 8,
+  },
+  cardText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

@@ -28,8 +28,8 @@ const StartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.glow, { opacity }]} />
-      <Image source={require('../resourses/rayan2.jpg')} style={styles.logo} />
-      <Text style={styles.title}>Welcome to Retrowave App!!!!!</Text>
+      <Image source={require('../resourses/rayan.png')} style={styles.logo} />
+      <Text style={styles.title}>Welcome to Sigma Trash App!!!!!</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Start</Text>
       </TouchableOpacity>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   glow: {
     position: 'absolute',
-    backgroundColor: '#ff00ff',
+    backgroundColor: '#666DD7',
     width: 400,
     height: 400,
     borderRadius: 400,
