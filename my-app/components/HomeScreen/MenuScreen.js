@@ -37,6 +37,7 @@ const MenuScreen = ({ navigation }) => {
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="All Tasks" component={AllTasksScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Add Task" component={NewTaskScreen} />
       </Tab.Navigator>
   );
 };

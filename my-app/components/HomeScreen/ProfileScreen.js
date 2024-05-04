@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   buttonContainer: {
+    marginTop: "10%",
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '80%',

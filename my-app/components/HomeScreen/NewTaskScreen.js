@@ -1,45 +1,81 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { URL_API } from '../urls';
-import axios from 'axios';
-import { getToken } from '../../utils/storage'; // Импортируем функцию для получения токена
 
-const NewTaskScreen = ({ navigation }) => {
+const NewTaskScreen = ({ navigation, route }) => {
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [experience, setExperience] = useState('');
+  const [ox, setOX] = useState('');
+  const [oy, setOY] = useState('');
 
-  const handleCreateTask = async () => {
-    const userToken = await getToken(); // Получаем токен из AsyncStorage
+  const handleCreateTask = () => {
+    const newTask = { 
+      id: Math.random().toString(), 
+      image, 
+      name, 
+      description, 
+      experience,
+      ox, 
+      oy, 
+      status: 'In progress' 
+    };
+    console.log('New task:', newTask);
+    route.params?.onTaskAdd(newTask);
+    console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
+    navigation.goBack();
+  };
 
-    if (!userToken) {
-      console.error('User token is missing');
-      return;
-    }
+  const handleAddImage = () => {
+    // Реализация загрузки изображения
+  };
 
-    const newTask = { token: userToken, title: description, description: description, experience: 1, lat: 1, lon: 1 }; // Передаем только описание задачи
-
-    axios.post(URL_API + '/task/new', newTask)
-      .then(response => {
-        console.log('URL:', URL_API + '/task/new');
-        console.log('New Task:', newTask);
-        console.log('Task added successfully:', response.data);
-        console.log('Result status', response.status)
-        // navigation.goBack(); // Переход назад после успешного добавления
-      })
-      .catch(error => {
-        console.error('Error adding task:', error);
-        // Добавьте обработку ошибки при добавлении задачи
-      });
+  const handleSelectPlace = () => {
+    // Реализация выбора места
   };
 
   return (
     <View style={styles.container}>
-      <Text>New Task Screen</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter task description"
-        value={description}
-        onChangeText={setDescription}
-      />
+      <Text style={styles.title}>New Task Screen</Text>
+      <View style={styles.imageContainer}>
+        {/* Поле для загрузки изображения */}
+      </View>
+      <View style={styles.card}>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Description"
+          value={description}
+          onChangeText={setDescription}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Experience"
+          value={experience}
+          onChangeText={setExperience}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="OX"
+          value={ox}
+          onChangeText={setOX}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="OY"
+          value={oy}
+          onChangeText={setOY}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="Add Image" onPress={handleAddImage} />
+        <Button title="Select Place" onPress={handleSelectPlace} />
+      </View>
       <Button title="Create Task" onPress={handleCreateTask} />
     </View>
   );
@@ -51,14 +87,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+  imageContainer: {
+    width: '90%',
+    height: 200,
+    backgroundColor: '#ddd',
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  card: {
+    width: '100%',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
   },
   input: {
-    width: '100%',
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 20,
   },
 });
 
