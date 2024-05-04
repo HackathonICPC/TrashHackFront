@@ -44,6 +44,7 @@ const MapScreen = ({ navigation }) => {
       key={info.da}
       point={info.point}
       onPress={() => handleMarkerPress(info.data)}
+      image={require('../../resourses/nav-button.png')}
     />
   );
 
