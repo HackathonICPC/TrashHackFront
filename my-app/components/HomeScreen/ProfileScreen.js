@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getToken, removeToken } from '../../utils/storage';
 
 
 const ProfileScreen = ({ navigation }) => {
@@ -11,8 +11,8 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   const handleLogout = () => {
-    AsyncStorage.removeItem("userToken");
-    navigation.navigate('Login');
+    removeToken();
+    navigation.navigate('Start');
   };
   const handleEditProfile = () => {
     // Переход на экран редактирования профиля

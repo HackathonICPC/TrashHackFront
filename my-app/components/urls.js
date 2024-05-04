@@ -1,3 +1,3 @@
-const URL = "192.168.0.105";
+const URL = "http://10.124.189.78";
 const PORT = 8080
-export const URL_API = "http://" + URL + ":" + PORT + "/api/v1";
+export const URL_API = URL + ":" + PORT + "/api/v1";

@@ -9,13 +9,9 @@ const RegisterScreen = ({ navigation }) => {
     // Здесь должна быть логика регистрации, например, отправка данных на сервер
     console.log('Registration username:', username);
     console.log('Registration password:', password);
-
-    // Переход на следующий экран после успешной регистрации
-    navigation.navigate('HomeMenu');
   };
 
   const handleLogin = () => {
-    // Переход на экран входа
     navigation.navigate('Login');
   };
 

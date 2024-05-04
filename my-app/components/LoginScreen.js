@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { URL_API } from './urls';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setToken, getToken } from '../utils/storage';
 
 import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
 
   const handleLogin = () => {
     const requestData = {
@@ -21,7 +22,9 @@ const LoginScreen = ({ navigation }) => {
             
             if (response.status === 200 && response.data.length > 0 && response.data.length < 300) {
                 console.log('Login successful. Token:', response.data);
-                AsyncStorage.setItem('userToken', response.data);
+                
+                setToken(response.data);
+                
                 navigation.navigate('HomeMenu'); 
               } else if (response.status === 401) {
                 console.error('Invalid credentials (code ' + response.status + ')');
@@ -31,13 +34,7 @@ const LoginScreen = ({ navigation }) => {
               }
             })
         .catch(error => {
-            //Нужно здесь написать нормальное ловление исключений. 
-            //Потому что я сверху написал случай когда код 401 (неавторизован пользователь - неправильный пароль)
-            //но этот случай уходит сюда с кучей ненужной инфы
-            //кто нибудь зафиксите это
             console.error('Login error:', error);
-            console.error(error.response);
-            console.error('Login error:', error.response.data);
         });
   };
 
