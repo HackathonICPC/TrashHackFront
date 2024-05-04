@@ -15,8 +15,6 @@ import RegisterScreen from './components/RegisterScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-
-  
  
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
