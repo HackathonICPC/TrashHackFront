@@ -1,18 +1,26 @@
 {
-  "cli": {
-    "version": ">= 8.0.0"
-  },
   "build": {
+    "base": {
+      "env": {}
+    },
+    "release": {
+      "android": {}
+    },
     "development": {
+      "extends": "base",
       "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+      "distribution": "internal",
+      "releaseChannel": "default",
+      "android": {
+        "buildType": "apk"
+      }
+    }
   },
   "submit": {
-    "production": {}
+    "release": {}
+  },
+  "cli": {
+    "version": ">= 0.44.1",
+    "requireCommit": true
   }
 }

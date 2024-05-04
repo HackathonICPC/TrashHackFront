@@ -39,7 +39,7 @@ const MapScreen = () => {
     })();
   }, []);
 
-  
+
   const handleMarkerPress = (markerData) => {
     setSelectedMarker(markerData);
   };
