@@ -1,18 +1,50 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { URL_API } from './urls';
+import { setToken, getToken } from '../utils/storage';
+
+import axios from 'axios';
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
 
-  const handleRegistration = () => {
-    // Здесь должна быть логика регистрации, например, отправка данных на сервер
-    console.log('Registration username:', username);
-    console.log('Registration password:', password);
+  const handleRegister = () => {
+    const requestData = {
+        "login": username,
+        "password": password
+      };
+
+      // debug START
+      console.log();
+      // degug END
+
+      axios.post(URL_API + "/auth/register", requestData)
+        .then(response => {
+            const data = response.data; 
+            console.log(URL_API + "/auth/register")
+            
+            if (response.status === 200 && response.data.length > 0 && response.data.length < 300) {
+                console.log('Register successful. Token:', response.data);
+                
+                setToken(response.data);
+                
+                navigation.navigate('HomeMenu'); 
+            } else if (response.status === 401) {
+                console.error('Invalid credentials (code ' + response.status + ')');
+            }
+            else {
+                console.error('Critical server error (code ' + response.status + ')');
+            }
+            })
+        .catch(error => {
+            console.error('Register error:', error);
+        });
   };
 
-  const handleLogin = () => {
-    navigation.navigate('Login');
+  const handleRegistration = () => {
+    navigation.navigate('Login'); 
   };
 
   return (
@@ -31,9 +63,8 @@ const RegisterScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Register" onPress={handleRegistration} />
-      <Text style={styles.link} onPress={handleLogin}>Уже есть аккаунт? Зайди!</Text>
-      <Button title="HOME" onPress={() => navigation.navigate("HomeMenu")} />
+      <Button title="Register" onPress={handleRegister} />
+      <Text style={styles.link} onPress={handleRegistration}>У меня нет аккаунта, переведи меня на логин</Text>
     </View>
   );
 };
