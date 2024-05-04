@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { URL_API } from './urls';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
-
-const URL_API = "http://10.124.249.25:8080/api/";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -11,40 +11,34 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     const requestData = {
-        username: username,
-        password: password
+        "login": username,
+        "password": password
       };
-      // console.log(username);
-      // console.log(password);
-      axios.post(URL_API+"auth/login", requestData)
+      axios.post(URL_API + "/auth/login", requestData)
         .then(response => {
-            // console.log('!' + username);
-            // console.log(password);
-            const data = response.data; // Данные, которые пришли с сервера
-            // console.log(response);
-            // console.log(data);
-            // console.log(response.status);
+            const data = response.data; 
+            console.log(URL_API + "/auth/login")
             
-            if (response.status === 200) {
-                console.log('Login successful. Token:', response.status);
-                // Сохраните токен в AsyncStorage или контексте приложения
-                // Перенаправьте пользователя на следующий экран или выполните необходимые действия
-                } else {
-                console.error('Login failed. Invalid response from server:', data);
-                // Добавьте код для обработки неверного ответа сервера
-                }
+            if (response.status === 200 && response.data.length > 0 && response.data.length < 300) {
+                console.log('Login successful. Token:', response.data);
+                AsyncStorage.setItem('userToken', response.data);
+                navigation.navigate('HomeMenu'); 
+              } else if (response.status === 401) {
+                console.error('Invalid credentials (code ' + response.status + ')');
+              }
+              else {
+                console.error('Critical server error (code ' + response.status + ')');
+              }
             })
         .catch(error => {
+            //Нужно здесь написать нормальное ловление исключений. 
+            //Потому что я сверху написал случай когда код 401 (неавторизован пользователь - неправильный пароль)
+            //но этот случай уходит сюда с кучей ненужной инфы
+            //кто нибудь зафиксите это
             console.error('Login error:', error);
-            // Добавьте код для обработки ошибки входа
+            console.error(error.response);
+            console.error('Login error:', error.response.data);
         });
-
-    // Ваша логика входа здесь, например, проверка данных на сервере или в локальном хранилище
-    console.log('Username:', username);
-    console.log('Password:', password);
-
-    //потом убери
-    navigation.navigate('HomeMenu'); 
   };
 
   const handleRegistration = () => {
