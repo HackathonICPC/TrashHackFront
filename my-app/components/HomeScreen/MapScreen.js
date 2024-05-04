@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ClusteredYamap, Marker } from 'react-native-yamap';
 
-const MapScreen = () => {
+const MapScreen = ({navigation}) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const mapRef = useRef(null);
+  
 
   const clusteredMarkers = [
     {
@@ -54,6 +55,8 @@ const MapScreen = () => {
           <TouchableOpacity
             style={{ marginTop: 10, backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
             onPress={() => {
+              // Навигация на TaskDetailScreen с передачей параметра taskId
+              navigation.navigate('TaskDetails', { task: selectedMarker });
               // Handle navigation to marker detail screen
               // You can use navigation library like React Navigation here
             }}
