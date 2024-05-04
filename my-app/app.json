@@ -2,9 +2,17 @@
   "expo": {
     "name": "my-app",
     "slug": "my-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5b6382fd-dc66-4487-a37b-c62ed0668112"
+      }
+    },
+    "android": {
+      "package": "com.sour_soup.myapp"
+    }
   }
 }
