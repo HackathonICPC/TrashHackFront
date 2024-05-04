@@ -14,7 +14,7 @@ const MenuScreen = ({ navigation }) => {
         <Tab.Screen name="Экран 1" component={ProfileScreen} />
         <Tab.Screen name="Экран 2" component={ProfileScreen} />
         {
-        //<Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Map" component={MapScreen} />
         }
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>

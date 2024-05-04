@@ -1,4 +1,4 @@
-package com.myapp
+package com.sour_soup.myapp
 
 import android.os.Build
 import android.os.Bundle

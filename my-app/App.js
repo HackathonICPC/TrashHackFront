@@ -8,8 +8,11 @@ import LoadingScreen from './components/LoadingScreen';
 import LoginScreen from './components/LoginScreen';
 import RegisterScreen from './components/RegisterScreen';
 
-//import {YaMap} from 'react-native-yamap';
-//YaMap.init('A916b0343-b8f7-4baa-ac7a-077d4a5386dd');
+
+const API_TOKEN = '916b0343-b8f7-4baa-ac7a-077d4a5386dd';
+
+import {ClusteredYamap, YaMap} from 'react-native-yamap';
+YaMap.init(API_TOKEN);
 
 
 const Stack = createNativeStackNavigator();

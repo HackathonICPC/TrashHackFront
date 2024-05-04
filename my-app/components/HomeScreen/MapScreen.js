@@ -1,42 +1,89 @@
-// import React from 'react';
-// import { View, StyleSheet } from 'react-native';
-// import {YaMap, Marker} from 'react-native-yamap';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { ClusteredYamap, Marker } from 'react-native-yamap';
+import * as Location from 'expo-location';
 
-// const MapScreen = () => {
-//   // Данные для меток на карте
-//   const markers = [
-//     { coordinate: { latitude: 55.7558, longitude: 37.6176 }, title: 'Москва', description: 'Столица России' },
-//     { coordinate: { latitude: 59.9343, longitude: 30.3351 }, title: 'Санкт-Петербург', description: 'Северная столица России' },
-//   ];    
+const MapScreen = () => {
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [userLocation, setUserLocation] = useState(null); // Состояние для хранения местоположения пользователя
+  const mapRef = useRef(null);
 
-//   const handleMarkerPress = (event) => {
-//     console.log('Marker pressed:', event);
-//   };
+  const clusteredMarkers = [
+    {
+      point: {
+        lat: 56.754215,
+        lon: 38.622504,
+      },
+      data: { id: 1, title: 'Marker 1', description: 'Description of Marker 1' },
+    },
+    {
+      point: {
+        lat: 56.754215,
+        lon: 38.222504,
+      },
+      data: { id: 2, title: 'Marker 2', description: 'Description of Marker 2' },
+    },
+  ];
 
-//   return (
-//     <View style={styles.container}>
-//         <YaMap
-//             userLocationIcon={{ uri: 'https://www.clipartmax.com/png/middle/180-1801760_pin-png.png' }}
-//             initialRegion={{
-//                 lat: 50,
-//                 lon: 50,
-//                 zoom: 10,
-//                 azimuth: 80,
-//                 tilt: 100
-//             }}
-//             style={{ flex: 1 }}
-//         />
-//     </View>
-//   );
-// };
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   map: {
-//     flex: 1,
-//   },
-// });
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
-// export default MapScreen;
+  
+  const handleMarkerPress = (markerData) => {
+    setSelectedMarker(markerData);
+  };
+
+  const renderMarker = (info, index) => (
+    <Marker
+      key={index}
+      point={info.point}
+      onPress={() => handleMarkerPress(info.data)}
+    />
+  );
+
+  return (
+    <View style={{ flex: 1 }}>
+      <ClusteredYamap
+        clusterColor="red"
+        clusteredMarkers={clusteredMarkers}
+        renderMarker={renderMarker}
+        style={{ flex: 1 }}
+        mapType={'vector'}
+        ref={mapRef}
+      />
+      {userLocation && ( // Отображаем метку местоположения пользователя, если местоположение получено
+        <Marker
+          point={userLocation}
+          onPress={() => setSelectedMarker({ title: 'Your Location', description: 'This is your current location' })}
+        />
+      )}
+      {selectedMarker && (
+        <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: 'white', padding: 20 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{selectedMarker.title}</Text>
+          <Text>{selectedMarker.description}</Text>
+          <TouchableOpacity
+            style={{ marginTop: 10, backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+            onPress={() => {
+              //...
+            }}
+          >
+            <Text style={{ color: 'white' }}>View Details</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+};
+
+export default MapScreen;

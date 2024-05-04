@@ -29,7 +29,7 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Animated.View style={[styles.glow, { opacity }]} />
       <Image source={require('../resourses/rayan2.jpg')} style={styles.logo} />
-      <Text style={styles.title}>Welcome to Retrowave App</Text>
+      <Text style={styles.title}>Welcome to Retrowave App!!!!!</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Start</Text>
       </TouchableOpacity>
