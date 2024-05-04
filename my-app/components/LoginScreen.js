@@ -14,6 +14,11 @@ const LoginScreen = ({ navigation }) => {
         "login": username,
         "password": password
       };
+
+      // debug START
+      console.log();
+      // degug END
+
       axios.post(URL_API + "/auth/login", requestData)
         .then(response => {
             const data = response.data; 
