@@ -15,8 +15,6 @@ YaMap.init(API_TOKEN);
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-
-  
  
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
