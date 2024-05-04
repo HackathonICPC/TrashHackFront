@@ -20,9 +20,9 @@ const SkillsCard = () => {
         <Text style={styles.headerText}>My Skills</Text>
       </View>
       <View style={styles.body}>
-        <SkillBar name="HTML" percent={90} />
-        <SkillBar name="CSS" percent={80} />
-        <SkillBar name="JavaScript" percent={75} />
+        <SkillBar name="Cleaning" percent={60} />
+        <SkillBar name="Searching" percent={50} />
+        <SkillBar name="Controlling" percent={12} />
         {/* Другие навыки... */}
       </View>
     </View>
@@ -31,7 +31,7 @@ const SkillsCard = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 300,
+    width: "95%",
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   skillName: {
-    width: 120,
+    width: "28%",
     fontSize: 16,
   },
   skillLevel: {
-    width: 160,
+    width: "50%",
     height: 10,
     backgroundColor: '#eee',
     borderRadius: 10,

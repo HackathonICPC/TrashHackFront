@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   card: {
-    width: 300,
+    width: "110%",
     alignItems: 'center',
     borderRadius: 20,
     backgroundColor: '#fff',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '80%',
   },
 });
 
