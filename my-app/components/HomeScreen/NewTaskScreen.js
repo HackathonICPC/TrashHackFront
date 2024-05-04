@@ -2,21 +2,28 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { URL_API } from '../urls';
 import axios from 'axios';
+import { getToken } from '../../utils/storage'; // Импортируем функцию для получения токена
 
 const NewTaskScreen = ({ navigation }) => {
   const [description, setDescription] = useState('');
 
-  const handleCreateTask = () => {
-    const newTask = { id: "54", title: 'cuMCock' };
+  const handleCreateTask = async () => {
+    const userToken = await getToken(); // Получаем токен из AsyncStorage
 
-    // debug
-    console.log('New task:', newTask);
-    // debug
+    if (!userToken) {
+      console.error('User token is missing');
+      return;
+    }
+
+    const newTask = { token: userToken, title: description, description: description, experience: 1, lat: 1, lon: 1 }; // Передаем только описание задачи
 
     axios.post(URL_API + '/task/new', newTask)
       .then(response => {
+        console.log('URL:', URL_API + '/task/new');
+        console.log('New Task:', newTask);
         console.log('Task added successfully:', response.data);
-        navigation.goBack(); // Переход назад после успешного добавления
+        console.log('Result status', response.status)
+        // navigation.goBack(); // Переход назад после успешного добавления
       })
       .catch(error => {
         console.error('Error adding task:', error);
