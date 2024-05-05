@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import MyCard from './MyCard';
 
-const TaskList = () => {
-  const [data, setData] = useState(Array.from({ length: 20 }, (_, index) => ({ id: index, text: `Item ${index + 1}` })));
+const TaskList = ({ tasks, onTaskPress }) => {
+  // Добавляем проверку на undefined перед использованием toString()
 
-  const fetchMoreData = () => {
-    // Simulate fetching more data (e.g., from an API)
-    const newData = Array.from({ length: 20 }, (_, index) => ({ id: data.length + index, text: `Item ${data.length + index + 1}` }));
-    setData([...data, ...newData]);
+  // console.log('tasks:', tasks);
+
+  const keyExtractor = (item) => {
+    // console.log('tasks:', tasks);
+    // console.log('item', item);
+    // console.log('item.id', item.id);
+    // console.log('item.desk', item.description);
+    // console.log('item.img', item.image);
+    return item.id ? item.id.toString() : "";
   };
 
   const renderItem = ({ item }) => {
     return (
       <View style={styles.cardContainer}>
-        <MyCard title={item.text} description="Description" />
+        <MyCard title={item.title} description={item.description} image={item.image} task={item} />
       </View>
     );
   };
 
+  // Выводим данные в консоль перед отображением списка задач
+  // console.log(tasks);
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={tasks}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        onEndReached={fetchMoreData} // Callback при достижении конца списка
-        onEndReachedThreshold={0.1} // Процент точки, когда вызывается onEndReached (например, 0.1 - 10% от конца)
+        keyExtractor={keyExtractor}
       />
     </View>
   );
@@ -34,22 +40,14 @@ const TaskList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     backgroundColor: '#fff',
     paddingTop: 20,
     marginHorizontal: 10,
   },
-  card: {
-    backgroundColor: '#f0f0f0',
+  cardContainer: {
     marginVertical: 8,
-    marginHorizontal: 16,
-    padding: 20,
-    borderRadius: 8,
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 
