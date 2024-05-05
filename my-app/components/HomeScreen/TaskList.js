@@ -2,17 +2,8 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import MyCard from './MyCard';
 
-const TaskList = ({ tasks, onTaskPress }) => {
-  // Добавляем проверку на undefined перед использованием toString()
-
-  // console.log('tasks:', tasks);
-
+const TaskList = ({ tasks }) => {
   const keyExtractor = (item) => {
-    // console.log('tasks:', tasks);
-    // console.log('item', item);
-    // console.log('item.id', item.id);
-    // console.log('item.desk', item.description);
-    // console.log('item.img', item.image);
     console.log('item:', item);
     return item.id ? item.id.toString() : "";
   };
@@ -20,13 +11,10 @@ const TaskList = ({ tasks, onTaskPress }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.cardContainer}>
-        <MyCard title={item.title} description={item.description} image={item.image} task={item} />
+        <MyCard task={item} />
       </View>
     );
   };
-
-  // Выводим данные в консоль перед отображением списка задач
-  // console.log(tasks);
 
   return (
     <View style={styles.container}>

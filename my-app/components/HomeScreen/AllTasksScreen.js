@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
       console.error('User token is missing');
       return;
     }
-
+  
     axios.post(URL_API + '/task/list', {token : userToken})
       .then(response => {
         const tasksData = response.data;
@@ -38,13 +38,9 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const handleTaskPress = (task) => {
-    navigation.navigate('TaskDetails', { task });
-  };
-
   return (
     <View style={styles.container}>
-      <TaskList tasks={tasks} onTaskPress={handleTaskPress} />
+      <TaskList tasks={tasks}/>
     </View>
   );
 };

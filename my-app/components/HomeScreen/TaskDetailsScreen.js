@@ -5,7 +5,7 @@ import { API_URL } from '../urls'; // Подставьте свой URL бэке
 import { getToken } from '../../utils/storage';
 
 const TaskDetailsScreen = ({ route }) => {
-  const { task } = route.params;
+  const { taskId } = route.params;
   const [isRegistered, setIsRegistered] = useState(false);
   const [canRegister, setCanRegister] = useState(false);
   const [canStart, setCanStart] = useState(false);
@@ -16,7 +16,6 @@ const TaskDetailsScreen = ({ route }) => {
 
   const fetchTaskInfo = async () => {
     const userToken = await getToken(); 
-
     try {
       const response = await axios.post(API_URL+'/task/task', {taskID: task.id, token : userToken});
 
@@ -74,6 +73,8 @@ const TaskDetailsScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: task.photo }} style={styles.photo} />
+
+
       <Text style={styles.description}>{task.description}</Text>
 
       {!isRegistered && canRegister && (
