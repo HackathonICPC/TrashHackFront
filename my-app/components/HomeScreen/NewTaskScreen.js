@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { getToken } from '../../utils/storage';
 import { URL_API } from '../urls';
+import * as Location from 'expo-location';
 
 const NewTaskScreen = ({ navigation, route }) => {
   
@@ -24,7 +25,7 @@ const NewTaskScreen = ({ navigation, route }) => {
         taskTitle: name, 
         taskDescription: description,
         taskX: ox,
-        taskY: oy 
+        taskY: oy
       });
       console.log('Response:', response.data);
       // route.params?.onTaskAdd(response.data);
@@ -40,8 +41,21 @@ const NewTaskScreen = ({ navigation, route }) => {
     // Реализация загрузки изображения
   };
 
+  
+
   const handleSelectPlace = () => {
-    // Реализация выбора места
+    const getUserLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+      setOX(location.coords.latitude.toString())
+      setOY(location.coords.longitude.toString())
+    };
+    getUserLocation();
   };
 
   return (
