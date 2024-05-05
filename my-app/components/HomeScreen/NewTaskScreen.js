@@ -68,7 +68,10 @@ const NewTaskScreen = ({ navigation, route }) => {
     console.log('result', result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      const imageUri = result.assets[0].uri;
+      console.log('resul.uri', imageUri);
+      setImage(imageUri);
+      console.log('image:', image);
     } else {
       console.log('result cancelled!');
     }
@@ -95,7 +98,7 @@ const NewTaskScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <Text style={styles.title}>New Task Screen</Text>
       <View style={styles.imageContainer}>
-        {image ? <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }} /> : null}
+      <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }} />
       </View>
       <View style={styles.card}>
         <TextInput
