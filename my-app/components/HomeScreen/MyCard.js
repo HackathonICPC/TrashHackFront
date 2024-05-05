@@ -39,7 +39,7 @@ const MyCard = ({ task }) => {
       <Card style={styles.card}>
         <Card.Cover 
            source={{ uri: `data:image/jpeg;base64,${imageData}` }}
-        />x
+        />
         <Card.Content>
           <Title style={styles.h3}>{title}</Title>
           <Paragraph style={styles.p}>{description}</Paragraph>

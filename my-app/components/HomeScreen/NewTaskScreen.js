@@ -86,7 +86,6 @@ const NewTaskScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>New Task Screen</Text>
       <View style={styles.imageContainer}>
       <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }} />
       </View>

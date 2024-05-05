@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
-import { API_URL } from '../urls'; // Подставьте свой URL бэкенда
+import { API_URL, URL_API } from '../urls'; // Подставьте свой URL бэкенда
 import { getToken } from '../../utils/storage';
 
 const TaskDetailsScreen = ({ route }) => {
   const { taskId } = route.params;
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [canRegister, setCanRegister] = useState(false);
-  const [canStart, setCanStart] = useState(false);
-
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   useEffect(() => {
     fetchTaskInfo();
   }, []);
@@ -17,78 +15,26 @@ const TaskDetailsScreen = ({ route }) => {
   const fetchTaskInfo = async () => {
     const userToken = await getToken(); 
     try {
-      const response = await axios.post(API_URL+'/task/task', {taskID: task.id, token : userToken});
-
-      const { isRegistered, canRegister, canStart } = response.data;
-      setIsRegistered(isRegistered);
-      setCanRegister(canRegister);
-      setCanStart(canStart);
+      console.log(route);
+      const response = await axios.post(URL_API+`/task/task?taskID=${taskId}`, { token : userToken});
+      setTitle(response.data.taskTitle);
+      setDescription(response.data.taskDescription);
     } catch (error) {
       console.error('Error fetching task info:', error);
     }
   };
 
-  const handleRegister = async () => {
-    const userToken = await getToken(); // Получите токен пользователя, например, из AsyncStorage
-
-    try {
-      const response = await axios.post(API_URL+'/event/envolve', {
-        token: userToken,
-        taskID: task.id,
-      });
-
-      if (response.data.success) {
-        setIsRegistered(true);
-        setCanRegister(false);
-        Alert.alert('Registration Success', 'You have been registered for the raid.');
-      } else {
-        Alert.alert('Registration Failed', 'Failed to register for the raid.');
-      }
-    } catch (error) {
-      console.error('Error registering for raid:', error);
-    }
-  };
-
-  const handleStartRaid = async () => {
-    const userToken = await getToken(); 
-
-    try {
-      const response = await axios.post(API_URL+'/event/start', {
-        token: userToken,
-        taskID: task.id,
-      });
-
-      if (response.data.success) {
-        Alert.alert('Start Raid', 'Select date and time for the raid.');
-        // Реализация логики выбора даты и времени, отправка запроса на бэкенд
-        // Обновление статуса и кнопок после успешного начала рейда
-      } else {
-        Alert.alert('Start Raid Failed', 'Failed to start the raid.');
-      }
-    } catch (error) {
-      console.error('Error starting raid:', error);
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <Image source={{ uri: task.photo }} style={styles.photo} />
-
-
-      <Text style={styles.description}>{task.description}</Text>
-
-      {!isRegistered && canRegister && (
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+      {/* <Image source={{  }} style={styles.photo} /> */}
+      <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Register for Raid</Text>
         </TouchableOpacity>
-      )}
-
-      {canStart && (
-        <TouchableOpacity style={styles.button} onPress={handleStartRaid}>
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Start Raid</Text>
         </TouchableOpacity>
-      )}
-
     </View>
   );
 };
@@ -108,6 +54,11 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 30,
     marginBottom: 20,
     textAlign: 'center',
   },
