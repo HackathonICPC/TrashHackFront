@@ -1,10 +1,9 @@
 import React, { useRef, useState} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Linking} from 'react-native';
 import { ClusteredYamap, Marker } from 'react-native-yamap';
 import { getToken } from '../../utils/storage';
 import axios from 'axios';
 import { URL_API } from '../urls';
-import * as Location from 'expo-location';
 
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -31,7 +30,7 @@ const MapScreen = ({ navigation }) => {
         console.log(response.data);
         setClusteredMarkers(response.data.map(marker => ({
           point: { lat: marker.taskX, lon: marker.taskY },
-          data: { id: marker.taskId, title: marker.taskTitle, description: marker.taskDescription }
+          data: { id: marker.taskId, title: marker.taskTitle, description: marker.taskDescription,  lat: marker.taskX, lon: marker.taskY }
         })));
       })
       .catch(error => {
@@ -70,7 +69,7 @@ const MapScreen = ({ navigation }) => {
           <TouchableOpacity
             style={{ marginTop: 10, backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
             onPress={() => {
-              navigation.navigate('TaskDetails', { task: selectedMarker });
+              navigation.navigate('TaskDetails', { task: selectedMarker.id });
             }}
           >
             <Text style={{ color: 'white' }}>Описание рейда</Text>
@@ -78,7 +77,7 @@ const MapScreen = ({ navigation }) => {
           <TouchableOpacity
             style={{ marginTop: 10, backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
             onPress={() => {
-              navigation.navigate('TaskDetails', { task: selectedMarker });
+              Linking.openURL(`yandexmaps://maps.yandex.ru/?rtext=~${selectedMarker.lat},${selectedMarker.lon}&rtt=pd`);
             }}
           >
             <Text style={{ color: 'white' }}>Построить маршрут</Text>
