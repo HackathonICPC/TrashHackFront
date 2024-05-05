@@ -7,12 +7,12 @@ import MenuScreen from './components/HomeScreen/MenuScreen';
 import LoginScreen from './components/LoginScreen';
 import TaskDetailsScreen from './components/HomeScreen/TaskDetailsScreen';
 import RegisterScreen from './components/RegisterScreen';
-import MyCard from './components/HomeScreen/MyCard';
 import {YaMap} from 'react-native-yamap';
-import { checkToken, getToken } from './utils/storage';
+
 
 const API_TOKEN = '916b0343-b8f7-4baa-ac7a-077d4a5386dd';
 YaMap.init(API_TOKEN);
+
 
 const Stack = createNativeStackNavigator();
 

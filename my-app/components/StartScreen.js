@@ -29,7 +29,6 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* <Animated.View style={[styles.glow, { opacity }]} /> */}
       <Image source={require('../resourses/turtle.gif')} style={styles.logo} />
-      <Text style={styles.title}>Welcome to Sigma Trash App!!!!!</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Start</Text>
       </TouchableOpacity>
@@ -59,17 +58,24 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
+    fontWeight: '800',
+    color: '#89BC57', /* Задаем цвет текста розовым */
+    marginBottom: 40,
   },
   button: {
-    backgroundColor: '#ff00ff',
+    backgroundColor: '#89BC57',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 50, /* Используйте большее значение радиуса для создания формы таблетки */
+    marginTop: 50,
+    shadowColor: '#DBEEC9', /* Цвет тени */
+    shadowOffset: { width: 0, height: 2 }, /* Смещение тени */
+    shadowOpacity: 0.1, /* Прозрачность тени */
+    shadowRadius: 5, /* Радиус размытия тени */
+    elevation: 5, /* Это свойство применяется только для Android и создает восприятие тени */
   },
   buttonText: {
+    fontSize: 24,
     color: '#fff',
     fontWeight: 'bold',
   },
