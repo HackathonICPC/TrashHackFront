@@ -16,16 +16,25 @@ const NewTaskScreen = ({ navigation, route }) => {
 
   const handleCreateTask = async () => {
     try {
-
       const userToken = await getToken();
 
+      console.log({
+        token: userToken,
+        taskPhoto : image,
+        taskTitle: name, 
+        taskDescription: description,
+        taskExperience: parseInt(experience),
+        taskX: parseFloat(ox),
+        taskY: parseFloat(oy)
+      });
       const response = await axios.post(URL_API+'/task/new', {
         token: userToken,
         taskPhoto : image,
         taskTitle: name, 
         taskDescription: description,
-        taskX: ox,
-        taskY: oy
+        taskExperience: parseInt(experience),
+        taskX: parseFloat(ox),
+        taskY: parseFloat(oy)
       });
       console.log('Response:', response.data);
       // route.params?.onTaskAdd(response.data);
@@ -33,7 +42,6 @@ const NewTaskScreen = ({ navigation, route }) => {
       navigation.goBack();
     } catch (error) {
       console.error('Error creating task:', error);
-      Alert.alert('Error', 'Failed to create task. Please try again.');
     }
   };
 
@@ -80,6 +88,7 @@ const NewTaskScreen = ({ navigation, route }) => {
         <TextInput
           style={styles.input}
           placeholder="Experience"
+          keyboardType="numeric"
           value={experience}
           onChangeText={setExperience}
         />
@@ -87,12 +96,14 @@ const NewTaskScreen = ({ navigation, route }) => {
           style={styles.input}
           placeholder="OX"
           value={ox}
+          keyboardType="numeric"
           onChangeText={setOX}
         />
         <TextInput
           style={styles.input}
           placeholder="OY"
           value={oy}
+          keyboardType="numeric"
           onChangeText={setOY}
         />
       </View>
