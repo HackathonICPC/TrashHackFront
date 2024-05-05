@@ -1,14 +1,25 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { getToken, removeToken } from '../../utils/storage';
 import SkillsCard from '../../components/HomeScreen/SkillsCard';
+import axios from 'axios';
+import { URL_API } from '../urls';
 
 const ProfileScreen = ({ navigation }) => {
-  const user = {
-    username: 'JohnDoe',
-    email: 'johndoe@example.com',
-    // Другие данные профиля...
-  };
+  const [username, setUsername] = useState('Username');
+  
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await axios.get(URL_API + "/user/info", {token: token});
+        console.log(response.data);
+        setUsername(response.data.login);
+      } catch (error) {
+        console.error('Error fetching image data:', error);
+      }
+    };
+    fetchUsername();
+  }, []); 
 
   const handleLogout = () => {
     removeToken();
@@ -24,10 +35,10 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.card}>
         <View style={styles.cardAvatar}>
           {/* Здесь можно использовать иконку профиля или другое изображение */}
-          <Text style={styles.avatarText}>JD</Text>
+          <Text style={styles.avatarText}>A</Text>
         </View>
-        <Text style={styles.cardTitle}>Cameron Williamson</Text>
-        <Text style={styles.cardSubtitle}>Web Development</Text>
+        <Text style={styles.cardTitle}>{username}</Text>
+        <Text style={styles.cardSubtitle}>Rookie garbage collector</Text>
         <View style={styles.profileInfo}>
           {/* <Text style={styles.label}>Username:</Text> */}
           {/* <Text style={styles.text}>{user.username}</Text> */}

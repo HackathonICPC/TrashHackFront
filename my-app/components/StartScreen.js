@@ -29,6 +29,7 @@ const StartScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* <Animated.View style={[styles.glow, { opacity }]} /> */}
       <Image source={require('../resourses/turtle.gif')} style={styles.logo} />
+      <Text style={styles.title}>SIGMA TRASH</Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
         <Text style={styles.buttonText}>Start</Text>
       </TouchableOpacity>
