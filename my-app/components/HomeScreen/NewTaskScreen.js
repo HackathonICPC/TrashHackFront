@@ -28,19 +28,9 @@ const NewTaskScreen = ({ navigation, route }) => {
   const handleCreateTask = async () => {
     try {
       const userToken = await getToken();
-
-      console.log({
-        token: userToken,
-        taskPhoto : parseLong(image),
-        taskTitle: name,
-        taskDescription: description,
-        taskExperiencePoints: parseLong(experience),
-        taskX: parseFloat(ox),
-        taskY: parseFloat(oy)
-      });
       const response = await axios.post(URL_API+'/task/new', {
         token: userToken,
-        taskPhoto : image,
+        taskPhoto : 1,
         taskTitle: name, 
         taskDescription: description,
         taskExperiencePoints: parseInt(experience),
