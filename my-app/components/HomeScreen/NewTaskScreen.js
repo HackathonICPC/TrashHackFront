@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker'; // Импортируем Imag
 import axios from 'axios';
 import { getToken } from '../../utils/storage';
 import { URL_API } from '../urls';
+import * as Location from 'expo-location';
 
 const NewTaskScreen = ({ navigation, route }) => {
   
@@ -27,25 +28,31 @@ const NewTaskScreen = ({ navigation, route }) => {
   const handleCreateTask = async () => {
     try {
       const userToken = await getToken();
-      const body = {
+
+      console.log({
         token: userToken,
         taskPhoto : image,
         taskTitle: name, 
         taskDescription: description,
-        experience: experience,
-        taskX: ox,
-        taskY: oy 
-      };
+        taskExperiencePoints: parseInt(experience),
+        taskX: parseFloat(ox),
+        taskY: parseFloat(oy)
+      });
+      const response = await axios.post(URL_API+'/task/new', {
+        token: userToken,
+        taskPhoto : image,
+        taskTitle: name, 
+        taskDescription: description,
+        taskExperiencePoints: parseInt(experience),
+        taskX: parseFloat(ox),
+        taskY: parseFloat(oy)
+      });
 
-      console.log('body: ', body);
-
-      const response = await axios.post(URL_API+'/task/new', body);
       console.log('Response:', response.data);
       console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
       navigation.goBack();
     } catch (error) {
       console.error('Error creating task:', error);
-      Alert.alert('Error', 'Failed to create task. Please try again.');
     }
   };
 
@@ -67,8 +74,21 @@ const NewTaskScreen = ({ navigation, route }) => {
     }
   };
 
+  
+
   const handleSelectPlace = () => {
-    // Реализация выбора места
+    const getUserLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+      setOX(location.coords.latitude.toString())
+      setOY(location.coords.longitude.toString())
+    };
+    getUserLocation();
   };
 
   return (
@@ -93,6 +113,7 @@ const NewTaskScreen = ({ navigation, route }) => {
         <TextInput
           style={styles.input}
           placeholder="Experience"
+          keyboardType="numeric"
           value={experience}
           onChangeText={setExperience}
         />
@@ -100,12 +121,14 @@ const NewTaskScreen = ({ navigation, route }) => {
           style={styles.input}
           placeholder="OX"
           value={ox}
+          keyboardType="numeric"
           onChangeText={setOX}
         />
         <TextInput
           style={styles.input}
           placeholder="OY"
           value={oy}
+          keyboardType="numeric"
           onChangeText={setOY}
         />
       </View>
