@@ -13,6 +13,7 @@ const TaskList = ({ tasks, onTaskPress }) => {
     // console.log('item.id', item.id);
     // console.log('item.desk', item.description);
     // console.log('item.img', item.image);
+    console.log('item:', item);
     return item.id ? item.id.toString() : "";
   };
 
