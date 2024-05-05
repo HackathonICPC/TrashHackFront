@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import axios from 'axios';
+import { getToken } from '../../utils/storage';
+import { URL_API } from '../urls';
 
 const NewTaskScreen = ({ navigation, route }) => {
+  
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -9,21 +13,27 @@ const NewTaskScreen = ({ navigation, route }) => {
   const [ox, setOX] = useState('');
   const [oy, setOY] = useState('');
 
-  const handleCreateTask = () => {
-    const newTask = { 
-      id: Math.random().toString(), 
-      image, 
-      name, 
-      description, 
-      experience,
-      ox, 
-      oy, 
-      status: 'In progress' 
-    };
-    console.log('New task:', newTask);
-    route.params?.onTaskAdd(newTask);
-    console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
-    navigation.goBack();
+  const handleCreateTask = async () => {
+    try {
+
+      const userToken = await getToken();
+
+      const response = await axios.post(URL_API+'/task/new', {
+        token: userToken,
+        taskPhoto : image,
+        taskTitle: name, 
+        taskDescription: description,
+        taskX: ox,
+        taskY: oy 
+      });
+      console.log('Response:', response.data);
+      // route.params?.onTaskAdd(response.data);
+      console.log('Updated tasks:'); // Чтобы убедиться, что задача была добавлена
+      navigation.goBack();
+    } catch (error) {
+      console.error('Error creating task:', error);
+      Alert.alert('Error', 'Failed to create task. Please try again.');
+    }
   };
 
   const handleAddImage = () => {
