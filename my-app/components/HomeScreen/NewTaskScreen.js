@@ -20,10 +20,10 @@ const NewTaskScreen = ({ navigation, route }) => {
 
       console.log({
         token: userToken,
-        taskPhoto : image,
-        taskTitle: name, 
+        taskPhoto : parseLong(image),
+        taskTitle: name,
         taskDescription: description,
-        taskExperience: parseInt(experience),
+        taskExperience: parseLong(experience),
         taskX: parseFloat(ox),
         taskY: parseFloat(oy)
       });
