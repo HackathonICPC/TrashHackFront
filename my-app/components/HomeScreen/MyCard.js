@@ -38,9 +38,8 @@ const MyCard = ({ task }) => {
     <TouchableOpacity onPress={handlePress}>
       <Card style={styles.card}>
         <Card.Cover 
-           style={{ width: 200, height: 200 }}
            source={{ uri: `data:image/jpeg;base64,${imageData}` }}
-        />
+        />x
         <Card.Content>
           <Title style={styles.h3}>{title}</Title>
           <Paragraph style={styles.p}>{description}</Paragraph>

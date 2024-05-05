@@ -62,51 +62,6 @@ const NewTaskScreen = ({ navigation, route }) => {
       console.log('resul.uri', imageUri);
       setImage(imageUri);
       console.log('image:', image);
-
-        // Создаем FormData для отправки изображения
-      const formData = new FormData();
-      formData.append('image', {
-        uri: imageUri,
-        type: 'image/jpeg', // Измените тип в соответствии с вашими требованиями
-        name: 'photo.jpg', // Название файла
-      });
-
-      // Чтение файла из хранилища устройства и конвертация в массив байтов
-      let imageFile = await fetch(imageUri);
-      let imageBlob = await imageFile.blob();
-      let byteArray = await new Uint8Array(await imageBlob.arrayBuffer());
-
-      console.log('byteArray', byteArray);
-      // Отправка массива байтов на бэкенд
-
-      try {
-        // Отправляем изображение на бэкенд
-        // const response = await axios.post(URL_API+'/images/upload', imageUri);
-        const response = await axios.post('URL_API/upload/photo', byteArray);
-        
-        console.log('byteArray', byteArray);
-        console.log('result of response', response);
-
-        // Получаем ключ id изображения из ответа бэкенда
-        const imageId = response.data.imageId;
-        console.log('response:', response);
-        console.log('response.data', response.data);
-        console.log('Image ID:', imageId);
-
-        setImage(imegeId);
-        console.log('поле image теперь равно:', image);
-
-        console.log(' ');
-
-        // Записываем ключ id в state или отправляем на бэкенд как параметр taskPhoto
-        // setImageId(imageId);
-        // setTaskPhoto(imageId);
-        // В вашем случае, учитывая ваши useState, можно использовать setImage(imageId);
-
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        Alert.alert('Error', 'Failed to upload image. Please try again.');
-      }
     } else {
       console.log('result cancelled!');
     }
